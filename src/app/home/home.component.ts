@@ -1,7 +1,10 @@
 import {
+  AfterViewInit,
   Component,
   OnInit
 } from '@angular/core';
+
+import * as Mapillary from 'mapillary-js';
 
 import { AppState } from '../app.service';
 import { Title } from './title';
@@ -21,9 +24,10 @@ import { XLargeDirective } from './x-large';
   // Every Angular template is first compiled by the browser before Angular runs it's compiler
   templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   // Set our default values
   public localState = { value: '' };
+  public viewer: mapillaryjs.Viewer;
   // TypeScript public modifiers
   constructor(
     public appState: AppState,
@@ -40,4 +44,8 @@ export class HomeComponent implements OnInit {
     this.appState.set('value', value);
     this.localState.value = '';
   }
+
+  public ngAfterViewInit() {
+    this.viewer = new Mapillary.Viewer('mjs', 'cjJ1SUtVOEMtdy11b21JM0tyYTZIQTphMWNmM2Y0NjA0ZjUzYzZm', 'H8wioIgoZFucPG2B9un4zg');
+  };
 }
